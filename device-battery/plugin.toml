@@ -1,0 +1,100 @@
+id = "sh/device-battery"
+name = "Device Battery"
+version = "0.3.2"
+plugin_api = 31
+author = "sh"
+license = "MIT"
+description = "Laptop, Logitech and 8BitDo batteries in one selectable bar widget."
+icon = "battery-charging"
+tags = ["bar", "panel", "service", "hardware"]
+dependencies = ["python3"]
+
+[[setting]]
+key = "device_aliases"
+type = "string_map"
+default = {}
+advanced = true
+label_key = "settings.aliases"
+description_key = "settings.aliases_description"
+
+[[service]]
+id = "service"
+entry = "service.luau"
+
+[[widget]]
+id = "battery"
+entry = "widget.luau"
+
+[widget.actions]
+middle = "settings-open-widget"
+right = "plugin sh/device-battery:service all force-refresh"
+
+[[widget.setting]]
+key = "refresh_seconds"
+type = "int"
+default = 60
+min = 30
+max = 600
+step = 5
+label_key = "settings.refresh"
+description_key = "settings.refresh_description"
+
+[[widget.setting]]
+key = "low_threshold"
+type = "int"
+default = 20
+min = 0
+max = 50
+label_key = "settings.low"
+
+[[widget.setting]]
+key = "show_percentage"
+type = "bool"
+default = true
+label_key = "settings.percentage"
+
+[[widget.setting]]
+key = "entry_spacing"
+type = "int"
+default = 12
+min = 0
+max = 48
+step = 1
+label_key = "settings.spacing"
+description_key = "settings.spacing_description"
+
+[[widget.setting]]
+key = "icon_style"
+type = "select"
+default = "auto"
+label_key = "settings.icon"
+description_key = "settings.icon_description"
+options = [
+  { value = "auto", label_key = "settings.icon_auto" },
+  { value = "battery", label_key = "settings.icon_battery" },
+  { value = "device", label_key = "settings.icon_device" },
+]
+
+[[widget.setting]]
+key = "show_offline"
+type = "bool"
+default = true
+label_key = "settings.offline"
+description_key = "settings.offline_description"
+
+[[widget.setting]]
+key = "show_progress"
+type = "bool"
+default = true
+label_key = "settings.progress"
+
+[[panel]]
+id = "devices"
+entry = "panel.luau"
+width = 420
+height = 470
+placement = "attached"
+position = "auto"
+open_near_click = true
+keyboard_focus = "on_demand"
+dismiss_on_outside_click = true
